@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For Nikolai</title>
+    <title>For Nicolai Anderson</title>
     <style>
         body {
             margin: 0;
@@ -15,27 +15,32 @@
             background-color: #ffebee; /* Soft romantic pink */
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow: hidden;
+            touch-action: manipulation;
         }
 
         .container {
             text-align: center;
-            background: white;
+            background: rgba(255, 255, 255, 0.9);
             padding: 3rem;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             z-index: 10;
+            max-width: 90%;
         }
 
         h1 {
             color: #d32f2f;
             font-size: 2rem;
             margin-bottom: 2rem;
+            line-height: 1.4;
         }
 
         .buttons {
             display: flex;
             gap: 20px;
             justify-content: center;
+            align-items: center;
+            min-height: 100px;
         }
 
         button {
@@ -45,42 +50,51 @@
             border-radius: 50px;
             cursor: pointer;
             transition: transform 0.2s, background-color 0.2s;
+            font-weight: bold;
         }
 
         #yesBtn {
             background-color: #ff4081;
             color: white;
+            box-shadow: 0 4px 15px rgba(255, 64, 129, 0.3);
         }
 
         #noBtn {
             background-color: #cfd8dc;
             color: #546e7a;
             position: relative;
+            transition: all 0.2s ease;
         }
 
         button:hover {
             transform: scale(1.1);
         }
 
-        /* Floating hearts background */
-        .heart {
+        /* Floating emojis background */
+        .floating-emoji {
             position: absolute;
-            color: #ffcdd2;
-            font-size: 20px;
             user-select: none;
+            pointer-events: none;
+            z-index: 1;
             animation: float 5s linear infinite;
         }
 
         @keyframes float {
-            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+            0% { 
+                transform: translateY(110vh) rotate(0deg); 
+                opacity: 1; 
+            }
+            100% { 
+                transform: translateY(-10vh) rotate(360deg); 
+                opacity: 0; 
+            }
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>Hey Nickolai Anderson, <br>would you be my valentine?</h1>
+        <h1>Hey Nicolai Anderson, <br>would you be my valentine?</h1>
         <div class="buttons">
             <button id="yesBtn">Yes</button>
             <button id="noBtn">No</button>
@@ -88,28 +102,73 @@
     </div>
 
     <script>
-        // Background Heart Effect
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            heart.innerHTML = '❤️';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
-            document.body.appendChild(heart);
+        const emojis = ['❤️', '🌈', '😊', '✨', '💖', '🥰', '🍭'];
 
+        // Function to create floating elements
+        function createEmoji() {
+            const emojiElement = document.createElement('div');
+            emojiElement.classList.add('floating-emoji');
+            
+            // Randomly pick an emoji from our list
+            const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+            emojiElement.innerHTML = randomEmoji;
+            
+            // Randomize position, size (LARGER), and speed
+            emojiElement.style.left = Math.random() * 100 + 'vw';
+            
+            // Increased size from 15-30px to 40-70px for better visibility
+            const size = Math.random() * (70 - 40) + 40;
+            emojiElement.style.fontSize = size + 'px';
+            
+            emojiElement.style.animationDuration = (Math.random() * 4 + 4) + 's';
+            
+            document.body.appendChild(emojiElement);
+
+            // Cleanup after animation finishes
             setTimeout(() => {
-                heart.remove();
-            }, 5000);
+                emojiElement.remove();
+            }, 8000);
         }
-        setInterval(createHeart, 300);
 
-        // Placeholders for your next steps
-        document.getElementById('yesBtn').addEventListener('click', () => {
-            alert("You said Yes! (Stay tuned for what happens next...)");
+        // Start spawning emojis
+        setInterval(createEmoji, 350);
+
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+
+        // The "Moving No Button" trick
+        function moveButton() {
+            const padding = 50;
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - padding * 2) + padding;
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - padding * 2) + padding;
+
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+        }
+
+        noBtn.addEventListener('mouseover', moveButton);
+        noBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault(); 
+            moveButton();
         });
 
-        document.getElementById('noBtn').addEventListener('click', () => {
-            alert("Oh no! (Stay tuned for what happens next...)");
+        // Click logic
+        yesBtn.addEventListener('click', () => {
+            document.querySelector('.container').innerHTML = `
+                <h1 style="font-size: 3rem;">YAY! ❤️</h1>
+                <p style="font-size: 1.5rem; color: #d32f2f;">I knew you'd say yes, Nicolai! 🥰</p>
+                <div style="font-size: 4rem;">🌹✨🥂</div>
+            `;
+            
+            // Shower of extra emojis
+            for(let i=0; i<50; i++) {
+                setTimeout(createEmoji, i * 50);
+            }
+        });
+
+        noBtn.addEventListener('click', () => {
+            alert("How did you even click that?! Try again! 😉");
         });
     </script>
 </body>
