@@ -291,7 +291,16 @@
                 
                 setTimeout(() => {
                     knifeOverlay.style.display = 'none';
-                    if (noBtn) noBtn.remove();
+                    
+                    if (yesEscapeCount >= 5) {
+                        // After the chase - remove the button forever
+                        if (noBtn) noBtn.remove();
+                    } else {
+                        // Immediate click scare - trigger the chase logic
+                        prankFinished = true;
+                        yesRunningMode = true;
+                    }
+                    
                     finalThreatReady = false;
                 }, 3000);
             } else {
