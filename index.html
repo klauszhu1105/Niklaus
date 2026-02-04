@@ -53,6 +53,7 @@
             z-index: 10;
             max-width: 90%;
             position: relative;
+            transition: opacity 2s ease-in-out;
         }
 
         h1 {
@@ -397,7 +398,8 @@
 
         yesBtn.addEventListener('click', () => {
             if (prankFinished && yesEscapeCount >= 5) {
-                document.querySelector('.container').innerHTML = `
+                const container = document.querySelector('.container');
+                container.innerHTML = `
                     <h1 style="font-size: 3rem;">YAY! ❤️</h1>
                     <p style="font-size: 1.5rem; color: #d32f2f;">I knew you'd say yes, Nikolai! 🥰</p>
                     <div style="font-size: 4rem;">🌹✨🥂</div>
@@ -406,6 +408,14 @@
                 // Start music and slideshow together
                 bgMusic.play().catch(error => console.log("Audio playback failed: ", error));
                 startSlideshow();
+
+                // Make the message container fade out and disappear after 5 seconds
+                setTimeout(() => {
+                    container.style.opacity = '0';
+                    setTimeout(() => {
+                        container.style.display = 'none';
+                    }, 2000); // Wait for transition to finish
+                }, 5000);
 
                 for(let i=0; i<50; i++) { setTimeout(createEmoji, i * 50); }
             }
