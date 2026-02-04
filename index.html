@@ -18,6 +18,20 @@
             touch-action: manipulation;
         }
 
+        /* Slideshow Background */
+        #slideshow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            background-size: cover;
+            background-position: center;
+            transition: background-image 1.5s ease-in-out;
+            opacity: 0;
+        }
+
         .container {
             text-align: center;
             background: rgba(255, 255, 255, 0.9);
@@ -95,7 +109,7 @@
             }
         }
 
-        /* Top Notification (The "Try Harder" message) */
+        /* Top Notification */
         #topBanner {
             position: fixed;
             top: -100px;
@@ -172,6 +186,8 @@
 </head>
 <body>
 
+    <div id="slideshow"></div>
+
     <div id="topBanner">
         <p>You need to try harder to find your valentine!</p>
     </div>
@@ -182,7 +198,6 @@
     </div>
 
     <div id="knifeOverlay">
-        <!-- Using your local knife.png file -->
         <img src="knife.png" alt="knife" onerror="this.src='https://img.icons8.com/color/512/chef-knife.png';">
         <h2 style="color: red; font-family: 'Courier New', Courier, monospace; margin-top: 20px; letter-spacing: 10px;">DON'T TEST ME.</h2>
     </div>
@@ -225,6 +240,7 @@
         const closeMsgBtn = document.getElementById('closeMsgBtn');
         const topBanner = document.getElementById('topBanner');
         const knifeOverlay = document.getElementById('knifeOverlay');
+        const slideshow = document.getElementById('slideshow');
 
         const handleYesHover = () => {
             if (!prankFinished && !yesRunningMode) {
@@ -316,6 +332,20 @@
             }
         }
 
+        function startSlideshow() {
+            slideshow.style.opacity = '1';
+            let currentImg = 1;
+            const images = ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg'];
+
+            const updateImg = () => {
+                slideshow.style.backgroundImage = `url('${images[currentImg - 1]}')`;
+                currentImg = (currentImg % images.length) + 1;
+            };
+
+            updateImg(); // Load first immediately
+            setInterval(updateImg, 3000); // Change every 3s
+        }
+
         yesBtn.addEventListener('click', () => {
             if (prankFinished && yesEscapeCount >= 5) {
                 document.querySelector('.container').innerHTML = `
@@ -323,6 +353,9 @@
                     <p style="font-size: 1.5rem; color: #d32f2f;">I knew you'd say yes, Nikolai! 🥰</p>
                     <div style="font-size: 4rem;">🌹✨🥂</div>
                 `;
+                
+                startSlideshow();
+
                 for(let i=0; i<50; i++) { setTimeout(createEmoji, i * 50); }
             }
         });
