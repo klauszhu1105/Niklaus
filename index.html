@@ -304,6 +304,7 @@
 
         noBtn.addEventListener('click', () => {
             if (prankTriggered && !prankFinished) {
+                // Scenario where he tried to click Yes and No blocked him
                 msgText.innerText = "Hey! You clicked NO?! Let's try that again, Nikolai... correctly this time. 😤";
                 closeMsgBtn.innerText = "Okay! 😅";
                 customMessage.style.display = 'block';
@@ -317,9 +318,13 @@
                 noBtn.style.zIndex = '6';
                 
                 prankFinished = true; 
-            } else if (yesEscapeCount >= 5) {
+            } else {
+                // Immediate click (prank not triggered) OR click after chase
                 finalThreatReady = true;
-                msgText.innerText = "Seriously? After all that chase? I'm gonna kill You! 🔪";
+                msgText.innerText = (yesEscapeCount >= 5) 
+                    ? "Seriously? After all that chase? I'm gonna kill You! 🔪" 
+                    : "Seriously? You clicked NO immediately? I'm gonna kill You! 🔪";
+                
                 closeMsgBtn.innerText = "What?";
                 customMessage.style.display = 'block';
             }
