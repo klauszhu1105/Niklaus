@@ -5,14 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For Nikolai Anderson</title>
     <style>
-        :root {
-            --primary-pink: #ff4081;
-            --soft-pink: #ffebee;
-            --dark-red: #d32f2f;
-            --gray-blue: #546e7a;
-            --light-gray: #cfd8dc;
-        }
-
         body {
             margin: 0;
             padding: 0;
@@ -20,30 +12,28 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: var(--soft-pink);
+            background-color: #ffebee; /* Soft romantic pink */
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow: hidden;
             touch-action: manipulation;
         }
 
-        /* Container for the main question */
         .container {
             text-align: center;
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.9);
             padding: 3rem;
-            border-radius: 25px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             z-index: 10;
-            max-width: 450px;
-            width: 90%;
+            max-width: 90%;
             position: relative;
         }
 
         h1 {
-            color: var(--dark-red);
-            font-size: 2.2rem;
+            color: #d32f2f;
+            font-size: 2rem;
             margin-bottom: 2rem;
-            line-height: 1.3;
+            line-height: 1.4;
         }
 
         .buttons {
@@ -51,37 +41,38 @@
             gap: 20px;
             justify-content: center;
             align-items: center;
-            min-height: 120px;
+            min-height: 100px;
             position: relative;
         }
 
         button {
-            padding: 16px 45px;
-            font-size: 1.3rem;
+            padding: 15px 40px;
+            font-size: 1.2rem;
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            transition: transform 0.2s, background-color 0.2s, all 0.2s ease;
+            transition: transform 0.2s, background-color 0.2s;
             font-weight: bold;
-            outline: none;
         }
 
         #yesBtn {
-            background-color: var(--primary-pink);
+            background-color: #ff4081;
             color: white;
             box-shadow: 0 4px 15px rgba(255, 64, 129, 0.3);
-            z-index: 20;
+            z-index: 20; 
+            transition: all 0.2s ease;
         }
 
         #noBtn {
-            background-color: var(--light-gray);
-            color: var(--gray-blue);
+            background-color: #cfd8dc;
+            color: #546e7a;
             position: relative;
-            z-index: 21;
+            z-index: 21; 
+            transition: all 0.2s ease;
         }
 
         button:hover {
-            transform: scale(1.05);
+            transform: scale(1.1);
         }
 
         /* Floating emojis background */
@@ -90,124 +81,110 @@
             user-select: none;
             pointer-events: none;
             z-index: 1;
-            animation: float Up 6s linear infinite;
+            animation: float 5s linear infinite;
         }
 
-        @keyframes floatUp {
+        @keyframes float {
             0% { 
                 transform: translateY(110vh) rotate(0deg); 
                 opacity: 1; 
             }
             100% { 
-                transform: translateY(-20vh) rotate(360deg); 
+                transform: translateY(-10vh) rotate(360deg); 
                 opacity: 0; 
             }
         }
 
-        /* Top Notification Banner (Try Harder) */
+        /* Top Notification (The "Try Harder" message) */
         #topBanner {
             position: fixed;
             top: -100px;
             left: 50%;
             transform: translateX(-50%);
             background: white;
-            padding: 20px 40px;
-            border-radius: 0 0 25px 25px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            padding: 15px 30px;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             z-index: 1000;
-            transition: top 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: top 0.5s ease;
             pointer-events: none;
-            width: 80%;
-            text-align: center;
         }
 
         #topBanner p {
             margin: 0;
-            color: var(--dark-red);
+            color: #d32f2f;
             font-weight: bold;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
         }
 
-        /* Custom Modal Dialog */
-        #customModal {
+        /* Modal Message Box */
+        #customMessage {
             display: none;
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             background: white;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 50px rgba(0,0,0,0.3);
-            z-index: 150;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.3);
+            z-index: 100;
             text-align: center;
-            min-width: 280px;
+            min-width: 250px;
         }
 
-        #customModal p {
+        #customMessage p {
             font-weight: bold;
-            color: var(--dark-red);
-            font-size: 1.2rem;
-            margin-bottom: 20px;
+            color: #d32f2f;
+            margin-bottom: 15px;
         }
 
-        /* Scary Knife Screen */
-        #scareOverlay {
+        /* Bloody Knife Overlay */
+        #knifeOverlay {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.98);
+            background: rgba(0, 0, 0, 0.95);
             z-index: 2000;
             justify-content: center;
             align-items: center;
             flex-direction: column;
         }
 
-        #scareOverlay img {
-            max-width: 70%;
-            max-height: 60%;
-            filter: drop-shadow(0 0 30px rgba(255, 0, 0, 0.9));
-            animation: terrorShake 0.1s infinite;
+        #knifeOverlay img {
+            max-width: 80%;
+            max-height: 80%;
+            animation: shake 0.2s infinite;
+            filter: drop-shadow(0 0 25px rgba(255, 0, 0, 0.8));
         }
 
-        @keyframes terrorShake {
-            0% { transform: translate(3px, 3px) rotate(0deg); }
-            25% { transform: translate(-3px, -4px) rotate(-2deg); }
-            50% { transform: translate(-5px, 0px) rotate(2deg); }
-            75% { transform: translate(3px, 4px) rotate(-2deg); }
-            100% { transform: translate(1px, -3px) rotate(0deg); }
-        }
-
-        .scare-text {
-            color: #ff0000;
-            font-family: 'Courier New', Courier, monospace;
-            margin-top: 30px;
-            font-size: 2.5rem;
-            letter-spacing: 15px;
-            text-shadow: 0 0 10px red;
+        @keyframes shake {
+            0% { transform: translate(2px, 2px) rotate(0deg); }
+            25% { transform: translate(-2px, -3px) rotate(-1deg); }
+            50% { transform: translate(-4px, 0px) rotate(1deg); }
+            75% { transform: translate(2px, 3px) rotate(-1deg); }
+            100% { transform: translate(1px, -2px) rotate(0deg); }
         }
     </style>
 </head>
 <body>
 
-    <!-- Notification at the top for the chase -->
     <div id="topBanner">
         <p>You need to try harder to find your valentine!</p>
     </div>
 
-    <!-- Modal for game transitions -->
-    <div id="customModal">
-        <p id="modalText"></p>
-        <button id="modalBtn" style="padding: 12px 25px; font-size: 1.1rem; background: var(--primary-pink); color: white; border-radius: 12px;">Okay! 😅</button>
+    <div id="customMessage">
+        <p id="msgText"></p>
+        <button id="closeMsgBtn" style="padding: 10px 20px; font-size: 1rem; background: #ff4081; color: white; border-radius: 10px; cursor: pointer; border: none;">Okay! 😅</button>
     </div>
 
-    <!-- Scary Knife sequence -->
-    <div id="scareOverlay">
-        <img src="knife.png" alt="knife" onerror="this.src='https://img.icons8.com/color/512/chef-knife.png'; this.style.filter='drop-shadow(0 0 20px red) hue-rotate(-50deg)';">
-        <div class="scare-text">RUN.</div>
+    <div id="knifeOverlay">
+        <!-- Using your local knife.png file -->
+        <img src="knife.png" alt="knife" onerror="this.src='https://img.icons8.com/color/512/chef-knife.png';">
+        <h2 style="color: red; font-family: 'Courier New', Courier, monospace; margin-top: 20px; letter-spacing: 10px;">DON'T TEST ME.</h2>
     </div>
 
     <div class="container">
@@ -219,40 +196,37 @@
     </div>
 
     <script>
-        const emojis = ['❤️', '🌈', '😊', '✨', '💖', '🥰', '🍭', '🌸', '🎁'];
-        let prankTriggered = false; // Expanding No button active
-        let prankFinished = false;  // First No click done
-        let yesRunningMode = false; // Yes button running away
-        let yesEscapeCount = 0;     // Number of times Yes has run
-        let finalConfrontation = false; // Ready for the knife scare
+        const emojis = ['❤️', '🌈', '😊', '✨', '💖', '🥰', '🍭'];
+        let prankTriggered = false;
+        let prankFinished = false;
+        let yesRunningMode = false;
+        let yesEscapeCount = 0;
+        let finalThreatReady = false;
 
-        // Background animation logic
         function createEmoji() {
-            const emoji = document.createElement('div');
-            emoji.classList.add('floating-emoji');
-            emoji.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
-            
-            emoji.style.left = Math.random() * 100 + 'vw';
-            // Large emojis as requested
-            const size = Math.random() * (80 - 45) + 45; 
-            emoji.style.fontSize = size + 'px';
-            emoji.style.animationDuration = (Math.random() * 3 + 4) + 's';
-            
-            document.body.appendChild(emoji);
-            setTimeout(() => emoji.remove(), 7000);
+            const emojiElement = document.createElement('div');
+            emojiElement.classList.add('floating-emoji');
+            const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+            emojiElement.innerHTML = randomEmoji;
+            emojiElement.style.left = Math.random() * 100 + 'vw';
+            const size = Math.random() * (70 - 40) + 40;
+            emojiElement.style.fontSize = size + 'px';
+            emojiElement.style.animationDuration = (Math.random() * 4 + 4) + 's';
+            document.body.appendChild(emojiElement);
+            setTimeout(() => { emojiElement.remove(); }, 8000);
         }
-        setInterval(createEmoji, 300);
+
+        setInterval(createEmoji, 350);
 
         const noBtn = document.getElementById('noBtn');
         const yesBtn = document.getElementById('yesBtn');
-        const modal = document.getElementById('customModal');
-        const modalText = document.getElementById('modalText');
-        const modalBtn = document.getElementById('modalBtn');
+        const customMessage = document.getElementById('customMessage');
+        const msgText = document.getElementById('msgText');
+        const closeMsgBtn = document.getElementById('closeMsgBtn');
         const topBanner = document.getElementById('topBanner');
-        const scareOverlay = document.getElementById('scareOverlay');
+        const knifeOverlay = document.getElementById('knifeOverlay');
 
-        // Logic for covering the Yes button initially
-        const triggerExpandingNo = () => {
+        const handleYesHover = () => {
             if (!prankFinished && !yesRunningMode) {
                 noBtn.style.position = 'absolute';
                 noBtn.style.width = '100%';
@@ -263,45 +237,39 @@
                 noBtn.innerText = "NOPE! 😜";
                 prankTriggered = true;
             } else if (yesRunningMode && yesEscapeCount < 5) {
-                runYesAway();
+                moveYesButton();
             }
         };
 
-        yesBtn.addEventListener('mouseenter', triggerExpandingNo);
+        yesBtn.addEventListener('mouseenter', handleYesHover);
         yesBtn.addEventListener('touchstart', (e) => {
             if (!prankFinished || (yesRunningMode && yesEscapeCount < 5)) {
                 e.preventDefault();
-                triggerExpandingNo();
+                handleYesHover();
             }
         });
 
-        // Close Modal Logic
-        modalBtn.onclick = () => {
-            if (finalConfrontation) {
-                // Trigger the scary knife visual
-                modal.style.display = 'none';
-                scareOverlay.style.display = 'flex';
+        closeMsgBtn.onclick = () => {
+            if (finalThreatReady) {
+                customMessage.style.display = 'none';
+                knifeOverlay.style.display = 'flex';
                 
                 setTimeout(() => {
-                    scareOverlay.style.display = 'none';
-                    // Delete the No button forever
+                    knifeOverlay.style.display = 'none';
                     if (noBtn) noBtn.remove();
-                    finalConfrontation = false;
+                    finalThreatReady = false;
                 }, 3000);
             } else {
-                modal.style.display = 'none';
+                customMessage.style.display = 'none';
             }
         };
 
-        // No Button Click Logic
         noBtn.addEventListener('click', () => {
             if (prankTriggered && !prankFinished) {
-                // Force first fail
-                modalText.innerText = "Hey! You clicked NO?! Let's try that again, Nikolai... correctly this time. 😤";
-                modalBtn.innerText = "Okay! 😅";
-                modal.style.display = 'block';
+                msgText.innerText = "Hey! You clicked NO?! Let's try that again, Nikolai... correctly this time. 😤";
+                closeMsgBtn.innerText = "Okay! 😅";
+                customMessage.style.display = 'block';
 
-                // Reset No button state
                 noBtn.style.position = 'relative';
                 noBtn.style.width = '';
                 noBtn.style.height = '';
@@ -313,61 +281,49 @@
                 prankFinished = true; 
                 yesRunningMode = true; 
             } else if (yesEscapeCount >= 5) {
-                // Final prank trigger
-                finalConfrontation = true;
-                modalText.innerText = "Seriously? After all that chase? I'm gonna kill You!";
-                modalBtn.innerText = "What?";
-                modal.style.display = 'block';
+                finalThreatReady = true;
+                msgText.innerText = "Seriously? After all that chase? I'm gonna kill You! 🔪";
+                closeMsgBtn.innerText = "What?";
+                customMessage.style.display = 'block';
             }
         });
 
-        // Chasing logic for Yes button
-        function runYesAway() {
+        function moveYesButton() {
             if (!yesRunningMode || yesEscapeCount >= 5) return;
 
-            // Show the top banner
             topBanner.style.top = '0';
 
-            const padding = 120;
-            const maxX = window.innerWidth - yesBtn.offsetWidth - padding;
-            const maxY = window.innerHeight - yesBtn.offsetHeight - padding;
-            
-            const randomX = Math.max(padding, Math.random() * maxX);
-            const randomY = Math.max(padding, Math.random() * maxY);
+            const padding = 100;
+            const x = Math.random() * (window.innerWidth - yesBtn.offsetWidth - padding * 2) + padding;
+            const y = Math.random() * (window.innerHeight - yesBtn.offsetHeight - padding * 2) + padding;
             
             yesBtn.style.position = 'fixed';
-            yesBtn.style.left = `${randomX}px`;
-            yesBtn.style.top = `${randomY}px`;
+            yesBtn.style.left = `${x}px`;
+            yesBtn.style.top = `${y}px`;
 
             yesEscapeCount++;
 
-            // Finish the chase after 5 escapes
             if (yesEscapeCount >= 5) {
                 topBanner.style.top = '-100px'; 
                 setTimeout(() => {
-                    modalText.innerText = "Okay, okay! You win. I'm right here. ❤️";
-                    modalBtn.innerText = "Finally! 😅";
-                    modal.style.display = 'block';
+                    msgText.innerText = "Okay, okay! You win. I'm right here. ❤️";
+                    closeMsgBtn.innerText = "Okay! 😅";
+                    customMessage.style.display = 'block';
                     yesBtn.style.position = 'relative';
                     yesBtn.style.left = '0';
                     yesBtn.style.top = '0';
-                    yesBtn.style.transition = 'none'; // Stop transition for final click
-                }, 600);
+                }, 500);
             }
         }
 
-        // Final Success Click
         yesBtn.addEventListener('click', () => {
             if (prankFinished && yesEscapeCount >= 5) {
                 document.querySelector('.container').innerHTML = `
-                    <h1 style="font-size: 3.5rem; margin-bottom: 10px;">YAY! ❤️</h1>
-                    <p style="font-size: 1.6rem; color: #d32f2f; font-weight: bold;">I knew you'd say yes, Nikolai! 🥰</p>
-                    <div style="font-size: 5rem; margin-top: 20px;">🌹✨🥂💍</div>
+                    <h1 style="font-size: 3rem;">YAY! ❤️</h1>
+                    <p style="font-size: 1.5rem; color: #d32f2f;">I knew you'd say yes, Nikolai! 🥰</p>
+                    <div style="font-size: 4rem;">🌹✨🥂</div>
                 `;
-                // Explosive emoji celebration
-                for(let i=0; i<60; i++) {
-                    setTimeout(createEmoji, i * 40);
-                }
+                for(let i=0; i<50; i++) { setTimeout(createEmoji, i * 50); }
             }
         });
     </script>
