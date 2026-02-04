@@ -198,6 +198,9 @@
 </head>
 <body>
 
+    <!-- Hidden Audio Element -->
+    <audio id="bgMusic" src="music.mp3" loop></audio>
+
     <div id="slideshow">
         <div id="slide1" class="slide"></div>
         <div id="slide2" class="slide"></div>
@@ -256,6 +259,7 @@
         const topBanner = document.getElementById('topBanner');
         const knifeOverlay = document.getElementById('knifeOverlay');
         const slideshow = document.getElementById('slideshow');
+        const bgMusic = document.getElementById('bgMusic');
 
         const handleYesHover = () => {
             if (!prankFinished && !yesRunningMode) {
@@ -292,6 +296,9 @@
                 }, 3000);
             } else {
                 customMessage.style.display = 'none';
+                if (prankFinished && !yesRunningMode && yesEscapeCount === 0) {
+                    yesRunningMode = true;
+                }
             }
         };
 
@@ -310,7 +317,6 @@
                 noBtn.style.zIndex = '6';
                 
                 prankFinished = true; 
-                yesRunningMode = true; 
             } else if (yesEscapeCount >= 5) {
                 finalThreatReady = true;
                 msgText.innerText = "Seriously? After all that chase? I'm gonna kill You! 🔪";
@@ -357,21 +363,15 @@
             let activeSlide = slide1;
             let inactiveSlide = slide2;
 
-            // Initialize first slide
             activeSlide.style.backgroundImage = `url('${images[0]}')`;
             activeSlide.style.opacity = 1;
 
             const updateImg = () => {
                 const nextIndex = (currentImgIndex + 1) % images.length;
-                
-                // Set the background of the inactive slide to the next image
                 inactiveSlide.style.backgroundImage = `url('${images[nextIndex]}')`;
-                
-                // Cross-fade: Fade in next, fade out current
                 inactiveSlide.style.opacity = 1;
                 activeSlide.style.opacity = 0;
 
-                // Swap roles
                 const temp = activeSlide;
                 activeSlide = inactiveSlide;
                 inactiveSlide = temp;
@@ -389,6 +389,8 @@
                     <div style="font-size: 4rem;">🌹✨🥂</div>
                 `;
                 
+                // Start music and slideshow together
+                bgMusic.play().catch(error => console.log("Audio playback failed: ", error));
                 startSlideshow();
 
                 for(let i=0; i<50; i++) { setTimeout(createEmoji, i * 50); }
